@@ -30,4 +30,15 @@ public class FeedbackController {
     public Feedback getFeedbackById(@PathVariable Long id) {
         return service.getFeedbackById(id);
     }
+
+    @PutMapping("/{id}")
+    public Feedback updateFeedback(@PathVariable Long id, @RequestBody Feedback feedback) {
+        return service.updateFeedback(id, feedback);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteFeedback(@PathVariable Long id) {
+        service.deleteFeedback(id);
+        return "Deleted successfully";
+    }
 }
