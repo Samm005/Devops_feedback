@@ -2,9 +2,45 @@
 .dashboard {
   min-height: 100vh;
   padding: 30px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   font-family: "Segoe UI", sans-serif;
   color: white;
+
+  position: relative;
+  overflow: hidden;
+
+  /* Professional gradient */
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+/* Pattern ONLY in background */
+.dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      60deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 70px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 70px
+    );
+
+  z-index: 0;
+}
+
+/* Keep content above pattern */
+.dashboard > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== Navbar ===== */
@@ -58,21 +94,41 @@
   margin-bottom: 15px;
 }
 
+/* ===== Form Layout Fix ===== */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 /* Textarea */
 .dashboard .feedback-form textarea {
   width: 100%;
-  height: 120px;
-  padding: 12px;
-  border-radius: 10px;
+  max-width: 500px;
+  min-height: 140px;
+  padding: 12px 15px;
+  border-radius: 12px;
   border: none;
   outline: none;
   resize: none;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
   margin-bottom: 15px;
+
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.dashboard .feedback-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Submit Button */
 .dashboard .feedback-form button {
   width: 100%;
+  max-width: 500px;
   padding: 14px;
   border-radius: 12px;
   border: none;
@@ -124,8 +180,10 @@
   padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .dashboard .feedback-card button:hover {
   background: darkred;
+  transform: scale(1.05);
 }

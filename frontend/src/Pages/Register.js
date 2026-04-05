@@ -8,19 +8,38 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
-    e.preventDefault();
+  const handleRegister = async (e) => {
+  e.preventDefault();
 
-    // ✅ Check passwords match
-    if (password !== confirmPassword) {
-      alert("Passwords do not match ❌");
-      return;
+  if (password !== confirmPassword) {
+    alert("Passwords do not match ❌");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+
+    const data = await res.text();
+
+    if (data === "Registered Successfully") {
+      alert("Registered Successfully ✅");
+      navigate("/");
+    } else {
+      alert(data);
     }
-
-    // 👉 Backend will handle actual registration
-    alert("Registered Successfully ✅");
-    navigate("/");
-  };
+  } catch (err) {
+    alert("Server Error ❌");
+  }
+};
 
   return (
     <div className="auth-bg">

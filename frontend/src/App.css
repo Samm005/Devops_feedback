@@ -1,41 +1,56 @@
-/* Slight variation for register */
-.glass-card h1 {
-  font-size: 26px;
-}
-
-/* Optional animation for button */
-button:active {
-  transform: scale(0.97);
-}
-
-/* Hover effect for links */
-.footer-text span:hover {
-  text-decoration: underline;
-}
-
-/* Background */
+/* ===== AUTH BACKGROUND ===== */
 .auth-bg {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #6b8fd6, #5a6fbf);
 }
 
-/* Glass Card */
+/* Circle pattern */
+.auth-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0 80px, transparent 90px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.12) 0 120px, transparent 130px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0 100px, transparent 110px),
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,0.08) 0 90px, transparent 100px);
+
+  z-index: 0;
+}
+
+.auth-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== GLASS CARD ===== */
 .glass-card {
-  width: 350px;
+  width: 360px;
   padding: 30px;
   border-radius: 20px;
+
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(15px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  animation: fadeIn 1s ease;
+
+  animation: fadeIn 0.6s ease;
 }
 
-/* Title */
 .glass-card h1 {
   margin-bottom: 5px;
 }
@@ -46,33 +61,56 @@ button:active {
   margin-bottom: 20px;
 }
 
-/* Inputs */
+/* ===== INPUTS (FIXED ALIGNMENT + HOVER) ===== */
 .input-group {
-  margin: 15px 0;
+  width: 100%;
+  margin: 12px 0;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 12px 15px;
+  border-radius: 12px;
   border: none;
   outline: none;
+
   background: rgba(255, 255, 255, 0.2);
   color: white;
+
+  font-size: 14px;
+  box-sizing: border-box;
+
+  transition: all 0.25s ease;
 }
 
 input::placeholder {
-  color: #ddd;
+  color: rgba(255,255,255,0.7);
 }
 
-/* Button */
+/* 🔥 Hover */
+input:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* 🔥 Focus */
+input:focus {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+  transform: scale(1.02);
+}
+
+/* ===== BUTTON ===== */
 button {
   width: 100%;
+  margin-top: 10px;
   padding: 12px;
+
   border-radius: 10px;
   border: none;
-  background: #ffffff;
-  color: #667eea;
+
+  background: white;
+  color: #5a6fbf;
+
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
@@ -83,7 +121,11 @@ button:hover {
   transform: scale(1.03);
 }
 
-/* Footer */
+button:active {
+  transform: scale(0.97);
+}
+
+/* ===== FOOTER ===== */
 .footer-text {
   margin-top: 15px;
   font-size: 14px;
@@ -94,60 +136,41 @@ button:hover {
   cursor: pointer;
 }
 
-/* Animation */
+.footer-text span:hover {
+  text-decoration: underline;
+}
+
+/* ===== ANIMATION ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-/* Dashboard layout */
+
+/* ===== DASHBOARD ===== */
 .dashboard {
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   min-height: 100vh;
+  padding: 30px;
   color: white;
+  font-family: "Segoe UI", sans-serif;
+
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
 }
 
-/* Navbar */
+/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-/* Form */
-.form-card {
-  background: rgba(255,255,255,0.15);
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
-
-/* Input */
-.form-card input {
-  width: 70%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin-right: 10px;
-}
-
-/* Feedback cards */
-.feedback-card {
-  background: rgba(255,255,255,0.15);
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-/* Form Card */
+/* FORM CARD */
 .form-card {
   background: rgba(255, 255, 255, 0.12);
   padding: 25px;
@@ -162,78 +185,7 @@ button:hover {
   transform: translateY(-5px);
 }
 
-/* Title */
-.form-card h2 {
-  margin-bottom: 15px;
-}
-
-/* Form Layout */
-.feedback-form {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Textarea */
-.feedback-form textarea {
-  resize: none;
-  height: 100px;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.2);
-  color: white;
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-
-.feedback-form textarea::placeholder {
-  color: #ddd;
-}
-
-/* Button */
-.feedback-form button {
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  background: white;
-  color: #667eea;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.feedback-form button:hover {
-  background: #f1f1f1;
-  transform: scale(1.03);
-}
-/* Improved Form Card */
-.form-card {
-  background: rgba(255, 255, 255, 0.12);
-  padding: 25px;
-  border-radius: 20px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  margin-bottom: 30px;
-  transition: 0.3s;
-}
-
-.form-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Title */
-.form-card h2 {
-  margin-bottom: 15px;
-}
-
-/* Form Layout */
-.feedback-form {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Textarea */
+/* TEXTAREA */
 .feedback-form textarea {
   resize: none;
   height: 120px;
@@ -241,9 +193,10 @@ button:hover {
   border-radius: 12px;
   border: none;
   outline: none;
+
   background: rgba(255,255,255,0.2);
   color: white;
-  font-size: 14px;
+
   margin-bottom: 15px;
 }
 
@@ -251,19 +204,39 @@ button:hover {
   color: #ddd;
 }
 
-/* Button */
-.feedback-form button {
-  padding: 12px;
+/* FEEDBACK CARD */
+.feedback-card {
+  background: rgba(255,255,255,0.15);
+  padding: 15px;
+  margin: 12px 0;
   border-radius: 12px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: 0.3s;
+}
+
+/* 🔥 HOVER EFFECT */
+.feedback-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  background: rgba(255,255,255,0.22);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* DELETE BUTTON */
+.feedback-card button {
+  background: red;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
   border: none;
-  background: white;
-  color: #667eea;
-  font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.feedback-form button:hover {
-  background: #f1f1f1;
-  transform: scale(1.03);
+.feedback-card button:hover {
+  background: darkred;
+  transform: scale(1.05);
 }

@@ -12,29 +12,30 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:8081/api/auth/login", {
+      const res = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          username,
+          password,
         }),
       });
 
       const data = await res.text();
 
-      if (data === "Login Successful") {
+      console.log("Response:", data);
+
+      if (data.includes("Login Successful")) {
         alert("Login Successful ✅");
 
-        // Save user locally
-        localStorage.setItem("user", username);
-
-        // Redirect to home
-        navigate("/home");
+        if (data === "Login Successful") {
+          localStorage.setItem("user", username);
+          navigate("/home");
+        }
       } else {
-        alert("Invalid Credentials ❌");
+        alert(data); //  show actual error
       }
     } catch (error) {
       console.error(error);
