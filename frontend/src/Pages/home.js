@@ -10,7 +10,7 @@ function Home() {
 
   const loadFeedback = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/feedback");
+      const res = await fetch("/api/feedback");
       const data = await res.json();
       setFeedback(data.data);
     } catch (err) {
@@ -31,7 +31,7 @@ function Home() {
     }
 
     try {
-      await fetch("http://localhost:8080/api/feedback/create", {
+      await fetch("/api/feedback/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function Home() {
 
   const deleteFeedback = async (id) => {
     try {
-      await fetch(`http://localhost:8080/api/feedback/delete/${id}`, {
+      await fetch(`/api/feedback/delete/${id}`, {
         method: "DELETE",
       });
       loadFeedback();

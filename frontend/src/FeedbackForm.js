@@ -9,7 +9,7 @@ function FeedbackForm({ reload }) {
   const submitFeedback = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8080/api/feedback/create", {
+    const response = await fetch("/api/feedback/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
