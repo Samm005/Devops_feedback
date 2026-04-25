@@ -17,6 +17,7 @@ function Home() {
 
   return (
     <div className="dashboard">
+      {/* Navbar */}
       <div className="navbar">
         <h2>Feedback System</h2>
         <button className="logout-btn" onClick={handleLogout}>
@@ -24,13 +25,16 @@ function Home() {
         </button>
       </div>
 
+      {/* Form Section */}
       <div className="form-container">
         <div className="form-card">
           <FeedbackForm reload={reload} />
         </div>
       </div>
 
+      {/* Feedback List */}
       <div className="feedback-list">
+        <h3>All Feedback</h3>
         <FeedbackList key={reloadFlag} />
       </div>
     </div>
