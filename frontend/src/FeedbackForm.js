@@ -19,6 +19,7 @@ function FeedbackForm({ reload }) {
         rating,
         message,
         category,
+        username: "testuser",
       }),
     });
 
@@ -40,13 +41,16 @@ function FeedbackForm({ reload }) {
     <form className="form" onSubmit={submitFeedback}>
       <h3>Add Feedback</h3>
 
-      <input
-        type="text"
-        placeholder="Project Name"
+      <select
         value={projectName}
         onChange={(e) => setProjectName(e.target.value)}
         required
-      />
+      >
+        <option value="">Select Product</option>
+        <option value="Product 1">Product 1</option>
+        <option value="Product 2">Product 2</option>
+        <option value="Product 3">Product 3</option>
+      </select>
 
       <input
         type="number"
