@@ -56,11 +56,10 @@ function FeedbackList() {
 
   return (
     <div className="feedback-list">
-      <h2>All Feedback</h2>
+      <h3>All Feedback</h3>
 
       {feedbacks.map((item) => (
         <div key={item.id} className="feedback-card">
-
           {editingId === item.id ? (
             <>
               <input
@@ -97,20 +96,23 @@ function FeedbackList() {
             </>
           ) : (
             <>
-              <h3 className="product-title">{item.projectName}</h3>
+              <div>
+                <p><strong>{item.projectName}</strong></p>
 
-              <div className="stars">
-                {"★".repeat(item.rating)}
-                {"☆".repeat(5 - item.rating)}
+                <div>
+                  {"★".repeat(item.rating)}
+                  {"☆".repeat(5 - item.rating)}
+                </div>
+
+                <p>{item.message}</p>
               </div>
 
-              <p>{item.message}</p>
-
-              <button onClick={() => startEdit(item)}>Edit</button>
-              <button onClick={() => deleteFeedback(item.id)}>Delete</button>
+              <div>
+                <button onClick={() => startEdit(item)}>Edit</button>
+                <button onClick={() => deleteFeedback(item.id)}>Delete</button>
+              </div>
             </>
           )}
-
         </div>
       ))}
     </div>

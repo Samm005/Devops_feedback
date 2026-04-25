@@ -58,16 +58,25 @@ function FeedbackForm({ reload }) {
         ))}
       </div>
 
-      <form className="form" onSubmit={submitFeedback}>
-        <h3>Add Feedback</h3>
+      <form className="feedback-form" onSubmit={submitFeedback}>
+        <h3>Share Your Feedback 💬</h3>
 
-        <input
-          type="number"
-          placeholder="Rating (1-5)"
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-          required
-        />
+        <div style={{ marginBottom: "15px" }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span
+              key={star}
+              onClick={() => setRating(star)}
+              style={{
+                fontSize: "28px",
+                cursor: "pointer",
+                color: star <= rating ? "#FFD700" : "#ccc",
+                marginRight: "5px",
+              }}
+            >
+              ★
+            </span>
+          ))}
+        </div>
 
         <input
           type="text"
@@ -78,14 +87,14 @@ function FeedbackForm({ reload }) {
         />
 
         <textarea
-          placeholder="Your Feedback"
+          placeholder="Write your feedback here..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
         />
 
         <button type="submit" disabled={!projectName}>
-          Submit
+          Submit Feedback
         </button>
       </form>
     </>
