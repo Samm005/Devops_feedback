@@ -1,86 +1,120 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function FeedbackForm({ reload }) {
-  const [projectName, setProjectName] = useState("");
-  const [rating, setRating] = useState(0);
-  const [category, setCategory] = useState("");
-  const [message, setMessage] = useState("");
+function FeedbackList() {
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({
+    projectName: "",
+    rating: 0,
+    category: "",
+    message: "",
+  });
 
-  const submitFeedback = async (e) => {
-    e.preventDefault();
+  const fetchFeedback = async () => {
+    const res = await fetch("/api/feedback");
+    const data = await res.json();
+    if (data.success) setFeedbacks(data.data);
+  };
 
-    try {
-      const res = await fetch("/api/feedback/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          projectName,
-          rating,
-          message,
-          category,
-        }),
-      });
+  useEffect(() => {
+    fetchFeedback();
+  }, []);
 
-      const data = await res.json();
+  const deleteFeedback = async (id) => {
+    await fetch(`/api/feedback/delete/${id}`, {
+      method: "DELETE",
+    });
+    fetchFeedback();
+  };
 
-      if (data.success) {
-        alert("Feedback Submitted ✅");
+  const startEdit = (item) => {
+    setEditingId(item.id);
+    setEditData({
+      projectName: item.projectName,
+      rating: item.rating,
+      category: item.category,
+      message: item.message,
+    });
+  };
 
-        setProjectName("");
-        setRating(0);
-        setCategory("");
-        setMessage("");
+  const handleUpdate = async (id) => {
+    const res = await fetch(`/api/feedback/update/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editData),
+    });
 
-        reload();
-      } else {
-        alert("Error submitting feedback");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Server Error ❌");
+    const data = await res.json();
+
+    if (data.success) {
+      setEditingId(null);
+      fetchFeedback();
+    } else {
+      alert("Update failed");
     }
   };
 
   return (
-    <form className="form" onSubmit={submitFeedback}>
-      <h3>Add Feedback</h3>
+    <div className="feedback-list">
+      <h2>All Feedback</h2>
 
-      <input
-        type="text"
-        placeholder="Project Name"
-        value={projectName}
-        onChange={(e) => setProjectName(e.target.value)}
-        required
-      />
+      {feedbacks.map((item) => (
+        <div key={item.id} className="feedback-card">
 
-      <input
-        type="number"
-        placeholder="Rating (1-5)"
-        value={rating}
-        onChange={(e) => setRating(Number(e.target.value))}
-        required
-      />
+          {editingId === item.id ? (
+            <>
+              <input
+                value={editData.projectName}
+                onChange={(e) =>
+                  setEditData({ ...editData, projectName: e.target.value })
+                }
+              />
 
-      <input
-        type="text"
-        placeholder="Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-      />
+              <input
+                type="number"
+                value={editData.rating}
+                onChange={(e) =>
+                  setEditData({ ...editData, rating: Number(e.target.value) })
+                }
+              />
 
-      <textarea
-        placeholder="Your Feedback"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        required
-      />
+              <input
+                value={editData.category}
+                onChange={(e) =>
+                  setEditData({ ...editData, category: e.target.value })
+                }
+              />
 
-      <button type="submit">Submit</button>
-    </form>
+              <textarea
+                value={editData.message}
+                onChange={(e) =>
+                  setEditData({ ...editData, message: e.target.value })
+                }
+              />
+
+              <button onClick={() => handleUpdate(item.id)}>Save</button>
+              <button onClick={() => setEditingId(null)}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <h3 className="product-title">{item.projectName}</h3>
+
+              <div className="stars">
+                {"★".repeat(item.rating)}
+                {"☆".repeat(5 - item.rating)}
+              </div>
+
+              <p>{item.message}</p>
+
+              <button onClick={() => startEdit(item)}>Edit</button>
+              <button onClick={() => deleteFeedback(item.id)}>Delete</button>
+            </>
+          )}
+
+        </div>
+      ))}
+    </div>
   );
 }
 
-export default FeedbackForm;
+export default FeedbackList;

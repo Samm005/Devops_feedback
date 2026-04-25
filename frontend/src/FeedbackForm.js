@@ -9,74 +9,86 @@ function FeedbackForm({ reload }) {
   const submitFeedback = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/feedback/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        projectName,
-        rating,
-        message,
-        category,
-        username: "testuser",
-      }),
-    });
+    try {
+      const res = await fetch("/api/feedback/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          projectName,
+          rating,
+          message,
+          category,
+          username: "testuser",
+        }),
+      });
 
-    const data = await response.json();
+      const data = await res.json();
 
-    if (data.success) {
-      alert("Feedback submitted successfully");
-      setProjectName("");
-      setRating(0);
-      setCategory("");
-      setMessage("");
-      reload();
-    } else {
-      alert("Error submitting feedback");
+      if (data.success) {
+        alert("Feedback Submitted ✅");
+
+        setProjectName("");
+        setRating(0);
+        setCategory("");
+        setMessage("");
+
+        reload();
+      } else {
+        alert("Error submitting feedback");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server Error ❌");
     }
   };
 
   return (
-    <form className="form" onSubmit={submitFeedback}>
-      <h3>Add Feedback</h3>
+    <>
+      <div className="product-container">
+        {["Women Blouse", "Children Shirt", "Men Flannel"].map((p) => (
+          <div
+            key={p}
+            className={`product-card ${projectName === p ? "selected" : ""}`}
+            onClick={() => setProjectName(p)}
+          >
+            <h4>{p}</h4>
+          </div>
+        ))}
+      </div>
 
-      <select
-        value={projectName}
-        onChange={(e) => setProjectName(e.target.value)}
-        required
-      >
-        <option value="">Select Product</option>
-        <option value="Product 1">Product 1</option>
-        <option value="Product 2">Product 2</option>
-        <option value="Product 3">Product 3</option>
-      </select>
+      <form className="form" onSubmit={submitFeedback}>
+        <h3>Add Feedback</h3>
 
-      <input
-        type="number"
-        placeholder="Rating (1-5)"
-        value={rating}
-        onChange={(e) => setRating(Number(e.target.value))}
-        required
-      />
+        <input
+          type="number"
+          placeholder="Rating (1-5)"
+          value={rating}
+          onChange={(e) => setRating(Number(e.target.value))}
+          required
+        />
 
-      <input
-        type="text"
-        placeholder="Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-      />
+        <input
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+        />
 
-      <textarea
-        placeholder="Your Feedback"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        required
-      />
+        <textarea
+          placeholder="Your Feedback"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+        />
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit" disabled={!projectName}>
+          Submit
+        </button>
+      </form>
+    </>
   );
 }
 
