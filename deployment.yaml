@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedback-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feedback-app
+  template:
+    metadata:
+      labels:
+        app: feedback-app
+    spec:
+      containers:
+        - name: feedback-app
+          image: feedback-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8082
