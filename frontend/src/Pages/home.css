@@ -46,11 +46,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 30px;
+
+  max-width: 1100px;
+  margin: 0 auto 40px auto;  /* center it */
+
+  padding: 18px 25px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 15px;
   backdrop-filter: blur(10px);
-  margin-bottom: 40px;
 }
 
 .dashboard .logout-btn {

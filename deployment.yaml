@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: feedback-app
-          image: feedback-app
-          imagePullPolicy: Never
+          image: samm123k/feedback-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8082
